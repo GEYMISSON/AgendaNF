@@ -1,1 +1,50 @@
-[{"data":"12/07/2026","nota":"9788","fornecedor":"Empresa A","volumes":100,"transportadora":"Trans Express"}]
+[
+    {
+        "id": 1,
+        "data": "2026-07-12",
+        "notaFiscal": "9788",
+        "fornecedor": "Metalúrgica Alfa",
+        "volumes": 100,
+        "transportadora": "Trans Express"
+    },
+    {
+        "id": 2,
+        "data": "2026-07-12",
+        "notaFiscal": "230908",
+        "fornecedor": "Indústria Beta",
+        "volumes": 50,
+        "transportadora": "Rápido Sul"
+    },
+    {
+        "id": 3,
+        "data": "2026-07-12",
+        "notaFiscal": "112233",
+        "fornecedor": "Comercial Gama",
+        "volumes": 20,
+        "transportadora": "Log Master"
+    },
+    {
+        "id": 4,
+        "data": "2026-07-13",
+        "notaFiscal": "3297",
+        "fornecedor": "Distribuidora Delta",
+        "volumes": 75,
+        "transportadora": "Transportes Brasil"
+    },
+    {
+        "id": 5,
+        "data": "2026-07-13",
+        "notaFiscal": "445566",
+        "fornecedor": "Atacado Ômega",
+        "volumes": 90,
+        "transportadora": "Log Master"
+    },
+    {
+        "id": 6,
+        "data": "2026-07-14",
+        "notaFiscal": "778899",
+        "fornecedor": "Grupo Sigma",
+        "volumes": 35,
+        "transportadora": "Expresso Nacional"
+    }
+]
