@@ -5,11 +5,13 @@
  * ==========================================
  */
 
+import { atualizarCards } from "./dashboard.js";
+
 let agenda = [];
 let agendaFiltrada = [];
 
 /**
- * Carrega o JSON
+ * Carrega a agenda
  */
 export async function carregarAgenda() {
 
@@ -18,12 +20,16 @@ export async function carregarAgenda() {
         const response = await fetch("./dados/agenda.json");
 
         if (!response.ok) {
+
             throw new Error("Erro ao carregar agenda.");
+
         }
 
         agenda = await response.json();
 
         agendaFiltrada = [...agenda];
+
+        atualizarCards(agendaFiltrada);
 
         renderizarTabela();
 
@@ -35,8 +41,9 @@ export async function carregarAgenda() {
 
 }
 
+
 /**
- * Pesquisa
+ * Pesquisa por texto
  */
 export function pesquisarAgenda(texto) {
 
@@ -46,7 +53,7 @@ export function pesquisarAgenda(texto) {
 
         return (
 
-            item.notaFiscal.toLowerCase().includes(texto) ||
+            item.notaFiscal.toString().toLowerCase().includes(texto) ||
 
             item.fornecedor.toLowerCase().includes(texto) ||
 
@@ -56,9 +63,58 @@ export function pesquisarAgenda(texto) {
 
     });
 
+    atualizarCards(agendaFiltrada);
+
     renderizarTabela();
 
 }
+
+
+/**
+ * Pesquisa por período
+ */
+export function pesquisarPorPeriodo(dataInicial, dataFinal) {
+
+    if (!dataInicial || !dataFinal) {
+
+        alert("Informe a data inicial e a data final.");
+
+        return;
+
+    }
+
+    agendaFiltrada = agenda.filter(item => {
+
+        return (
+
+            item.data >= dataInicial &&
+
+            item.data <= dataFinal
+
+        );
+
+    });
+
+    atualizarCards(agendaFiltrada);
+
+    renderizarTabela();
+
+}
+
+
+/**
+ * Atualiza tabela completa
+ */
+export function atualizarTabela() {
+
+    agendaFiltrada = [...agenda];
+
+    atualizarCards(agendaFiltrada);
+
+    renderizarTabela();
+
+}
+
 
 /**
  * Renderiza tabela
@@ -67,9 +123,30 @@ function renderizarTabela() {
 
     const tbody = document.getElementById("agendaTabela");
 
+    if (!tbody) return;
+
     tbody.innerHTML = "";
 
-    // Agrupa por data
+    if (agendaFiltrada.length === 0) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td colspan="6" style="text-align:center;padding:30px;">
+
+                    Nenhum registro encontrado.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
     const grupos = {};
 
     agendaFiltrada.forEach(item => {
@@ -84,32 +161,31 @@ function renderizarTabela() {
 
     });
 
-    // Ordena datas
+    Object.keys(grupos)
+        .sort()
+        .forEach(data => {
 
-    const datas = Object.keys(grupos).sort();
+            inserirCabecalhoData(tbody, data);
 
-    datas.forEach(data => {
+            let totalVolumes = 0;
 
-        inserirCabecalhoData(tbody, data);
+            grupos[data].forEach(item => {
 
-        let totalVolumes = 0;
+                totalVolumes += Number(item.volumes);
 
-        grupos[data].forEach(item => {
+                inserirLinha(tbody, item);
 
-            totalVolumes += item.volumes;
+            });
 
-            inserirLinha(tbody, item);
+            inserirTotalDia(tbody, totalVolumes);
 
         });
 
-        inserirTotalDia(tbody, totalVolumes);
-
-    });
-
 }
 
+
 /**
- * Cabeçalho da data
+ * Cabeçalho da Data
  */
 function inserirCabecalhoData(tbody, data) {
 
@@ -118,44 +194,94 @@ function inserirCabecalhoData(tbody, data) {
     tr.className = "data-grupo";
 
     tr.innerHTML = `
-        <td colspan="5">
-            <strong>${formatarData(data)}</strong>
+
+        <td colspan="6">
+
+            ${formatarData(data)}
+
         </td>
+
     `;
 
     tbody.appendChild(tr);
 
 }
 
+
 /**
- * Linha
+ * Linha da tabela
  */
 function inserirLinha(tbody, item) {
 
+    const pagina = window.location.pathname.split("/").pop();
+
     const tr = document.createElement("tr");
 
-    tr.innerHTML = `
+    if (pagina === "agendamentos.html") {
 
-        <td>${formatarData(item.data)}</td>
+        tr.innerHTML = `
 
-        <td>${item.notaFiscal}</td>
+            <td>${formatarData(item.data)}</td>
 
-        <td>${item.fornecedor}</td>
+            <td>${item.notaFiscal}</td>
 
-        <td>${item.volumes}</td>
+            <td>${item.fornecedor}</td>
 
-        <td>${item.transportadora}</td>
+            <td>${item.volumes}</td>
 
-    `;
+            <td>${item.transportadora}</td>
+
+            <td>
+
+                <button class="btn-editar">
+
+                    ✏️
+
+                </button>
+
+                <button class="btn-excluir">
+
+                    🗑️
+
+                </button>
+
+            </td>
+
+        `;
+
+    } else {
+
+        tr.innerHTML = `
+
+            <td>${formatarData(item.data)}</td>
+
+            <td>${item.notaFiscal}</td>
+
+            <td>${item.fornecedor}</td>
+
+            <td>${item.volumes}</td>
+
+            <td>${item.transportadora}</td>
+
+        `;
+
+    }
 
     tbody.appendChild(tr);
 
 }
 
+
 /**
- * Total
+ * Total por dia
  */
 function inserirTotalDia(tbody, total) {
+
+    const pagina = window.location.pathname.split("/").pop();
+
+    const colspan = pagina === "agendamentos.html"
+        ? 4
+        : 3;
 
     const tr = document.createElement("tr");
 
@@ -163,11 +289,19 @@ function inserirTotalDia(tbody, total) {
 
     tr.innerHTML = `
 
-        <td colspan="3"></td>
+        <td colspan="${colspan}"></td>
 
-        <td><strong>${total}</strong></td>
+        <td>
 
-        <td><strong>Total de Volumes</strong></td>
+            <strong>${total}</strong>
+
+        </td>
+
+        <td>
+
+            <strong>Total de Volumes</strong>
+
+        </td>
 
     `;
 
@@ -175,13 +309,14 @@ function inserirTotalDia(tbody, total) {
 
 }
 
+
 /**
- * Formata data
+ * Formata Data
  */
 function formatarData(dataISO) {
 
-    const data = new Date(dataISO + "T00:00:00");
+    const partes = dataISO.split("-");
 
-    return data.toLocaleDateString("pt-BR");
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
 
 }

@@ -8,10 +8,10 @@
 
     <title>Agenda NF</title>
 
-    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/print.css" media="print">
+
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
@@ -19,132 +19,251 @@
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <!-- ========================= -->
-        <!-- SIDEBAR -->
-        <!-- ========================= -->
+    <!-- ===========================
+         MENU LATERAL
+    ============================ -->
 
-        <aside class="sidebar">
+    <aside class="sidebar">
 
-            <div class="logo">
+        <div class="logo">
 
-                <h2>Agenda NF</h2>
+            <h2>Agenda NF</h2>
+
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li class="active">
+
+                    <a href="index.html">
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="agendamentos.html">
+
+                        <i class="fa-solid fa-calendar-days"></i>
+
+                        Agendamentos
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="fornecedores.html">
+
+                        <i class="fa-solid fa-building"></i>
+
+                        Fornecedores
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="transportadoras.html">
+
+                        <i class="fa-solid fa-truck"></i>
+
+                        Transportadoras
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+
+    <!-- ===========================
+          CONTEÚDO
+    ============================ -->
+
+    <main class="content">
+
+        <!-- CABEÇALHO -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Dashboard</h1>
+
+                <span class="subtitulo">
+
+                    Consulta de Agendamentos
+
+                </span>
 
             </div>
 
-            <nav>
+        </header>
 
-                <ul>
+        <!-- CARDS -->
 
-                    <li class="active">
-                        <a href="#">
-                            <i class="fa-solid fa-chart-line"></i>
-                            Dashboard
-                        </a>
-                    </li>
+        <section class="cards">
 
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            Agendamentos
-                        </a>
-                    </li>
+            <div class="card">
 
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-building"></i>
-                            Fornecedores
-                        </a>
-                    </li>
+                <i class="fa-solid fa-file-invoice"></i>
 
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-truck"></i>
-                            Transportadoras
-                        </a>
-                    </li>
+                <div>
 
-                </ul>
+                    <span>Total NF</span>
 
-            </nav>
+                    <h2 id="cardNF">0</h2>
 
-        </aside>
+                </div>
 
-        <!-- ========================= -->
-        <!-- CONTEÚDO -->
-        <!-- ========================= -->
+            </div>
 
-        <main class="content">
+            <div class="card">
 
-            <header class="topbar">
+                <i class="fa-solid fa-boxes-stacked"></i>
 
-                <h1>Agendamento de Notas</h1>
+                <div>
 
-                <button id="btnNovo">
+                    <span>Volumes</span>
 
-                    <i class="fa-solid fa-plus"></i>
+                    <h2 id="cardVolumes">0</h2>
 
-                    Novo
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-building"></i>
+
+                <div>
+
+                    <span>Fornecedores</span>
+
+                    <h2 id="cardFornecedor">0</h2>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-truck-fast"></i>
+
+                <div>
+
+                    <span>Transportadoras</span>
+
+                    <h2 id="cardTransportadora">0</h2>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- FILTRO -->
+
+        <section class="filtro">
+
+            <div class="campo">
+
+                <label>Data Inicial</label>
+
+                <input type="date" id="dataInicial">
+
+            </div>
+
+            <div class="campo">
+
+                <label>Data Final</label>
+
+                <input type="date" id="dataFinal">
+
+            </div>
+
+            <div class="botoes">
+
+                <button id="btnPesquisar">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    Pesquisar
 
                 </button>
 
-            </header>
+                <button id="btnLimpar">
 
-            <!-- Pesquisa -->
+                    <i class="fa-solid fa-broom"></i>
 
-            <section class="search-area">
+                    Limpar
 
-                <input
-                    type="text"
-                    id="pesquisa"
-                    placeholder="Pesquisar nota, fornecedor ou transportadora">
+                </button>
 
-            </section>
+                <button id="btnImprimir">
 
-            <!-- Tabela -->
+                    <i class="fa-solid fa-print"></i>
 
-            <section class="table-area">
+                    Imprimir
 
-                <table>
+                </button>
 
-                    <thead>
+            </div>
 
-                        <tr>
+        </section>
 
-                            <th width="18%">Data</th>
+        <!-- TABELA -->
 
-                            <th width="18%">Nota Fiscal</th>
+        <section class="table-area">
 
-                            <th>Fornecedor</th>
+            <table>
 
-                            <th width="15%">Volumes</th>
+                <thead>
 
-                            <th width="20%">Transportadora</th>
+                    <tr>
 
-                        </tr>
+                        <th>Data Agendamento</th>
 
-                    </thead>
+                        <th>Nota Fiscal</th>
 
-                    <tbody id="agendaTabela">
+                        <th>Fornecedor</th>
 
-                        <!--
-                            O JavaScript criará toda a tabela.
-                        -->
+                        <th>Volumes</th>
 
-                    </tbody>
+                        <th>Transportadora</th>
 
-                </table>
+                    </tr>
 
-            </section>
+                </thead>
 
-        </main>
+                <tbody id="agendaTabela">
 
-    </div>
+                </tbody>
 
-    <!-- JavaScript -->
+            </table>
 
-    <script type="module" src="js/app.js"></script>
+        </section>
+
+    </main>
+
+</div>
+
+<script type="module" src="js/app.js"></script>
 
 </body>
 

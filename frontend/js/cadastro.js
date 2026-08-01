@@ -8,7 +8,7 @@
 let modal = null;
 
 /**
- * Novo Cadastro
+ * Abre o modal de cadastro
  */
 export function novoCadastro() {
 
@@ -24,6 +24,7 @@ export function novoCadastro() {
 
 }
 
+
 /**
  * Fecha o modal
  */
@@ -33,8 +34,9 @@ function fecharModal() {
 
 }
 
+
 /**
- * Cria Modal
+ * Cria o modal
  */
 function criarModal() {
 
@@ -48,66 +50,37 @@ function criarModal() {
 
             <div class="modal-header">
 
-                <h2>Nova Nota Fiscal</h2>
+                <h2>Novo Agendamento</h2>
 
-                <button id="fecharModal">
-
-                    ✕
-
-                </button>
+                <button id="fecharModal">&times;</button>
 
             </div>
 
             <div class="modal-body">
 
                 <div class="campo">
-
                     <label>Data de Agendamento</label>
-
-                    <input
-                        type="date"
-                        id="cadData">
-
+                    <input type="date" id="cadData">
                 </div>
 
                 <div class="campo">
-
                     <label>Nota Fiscal</label>
-
-                    <input
-                        type="text"
-                        id="cadNF">
-
+                    <input type="text" id="cadNF">
                 </div>
 
                 <div class="campo">
-
                     <label>Fornecedor</label>
-
-                    <input
-                        type="text"
-                        id="cadFornecedor">
-
+                    <input type="text" id="cadFornecedor">
                 </div>
 
                 <div class="campo">
-
                     <label>Volumes</label>
-
-                    <input
-                        type="number"
-                        id="cadVolumes">
-
+                    <input type="number" id="cadVolumes" min="1">
                 </div>
 
                 <div class="campo">
-
                     <label>Transportadora</label>
-
-                    <input
-                        type="text"
-                        id="cadTransportadora">
-
+                    <input type="text" id="cadTransportadora">
                 </div>
 
             </div>
@@ -115,7 +88,7 @@ function criarModal() {
             <div class="modal-footer">
 
                 <button
-                    class="cancelar"
+                    class="btn-cancelar"
                     id="btnCancelar">
 
                     Cancelar
@@ -123,7 +96,7 @@ function criarModal() {
                 </button>
 
                 <button
-                    class="salvar"
+                    class="btn-salvar"
                     id="btnSalvar">
 
                     Salvar
@@ -152,25 +125,23 @@ function criarModal() {
 
 }
 
+
 /**
- * Limpa formulário
+ * Limpa o formulário
  */
 function limparFormulario() {
 
     document.getElementById("cadData").value = "";
-
     document.getElementById("cadNF").value = "";
-
     document.getElementById("cadFornecedor").value = "";
-
     document.getElementById("cadVolumes").value = "";
-
     document.getElementById("cadTransportadora").value = "";
 
 }
 
+
 /**
- * Salvar
+ * Salvar cadastro
  */
 function salvarCadastro() {
 
@@ -178,28 +149,22 @@ function salvarCadastro() {
 
         data: document.getElementById("cadData").value,
 
-        notaFiscal: document.getElementById("cadNF").value,
+        notaFiscal: document.getElementById("cadNF").value.trim(),
 
-        fornecedor: document.getElementById("cadFornecedor").value,
+        fornecedor: document.getElementById("cadFornecedor").value.trim(),
 
-        volumes: document.getElementById("cadVolumes").value,
+        volumes: Number(document.getElementById("cadVolumes").value),
 
-        transportadora: document.getElementById("cadTransportadora").value
+        transportadora: document.getElementById("cadTransportadora").value.trim()
 
     };
 
     if (
-
         !dados.data ||
-
         !dados.notaFiscal ||
-
         !dados.fornecedor ||
-
         !dados.volumes ||
-
         !dados.transportadora
-
     ) {
 
         alert("Preencha todos os campos.");
@@ -208,9 +173,9 @@ function salvarCadastro() {
 
     }
 
-    console.table(dados);
+    console.log("Novo Agendamento:", dados);
 
-    alert("Cadastro preparado.\n\nNa próxima etapa iremos salvar no sistema.");
+    alert("Cadastro validado!\n\nNa próxima versão os dados serão gravados automaticamente.");
 
     fecharModal();
 

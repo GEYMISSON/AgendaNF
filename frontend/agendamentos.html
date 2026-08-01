@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Agenda NF - Agendamentos</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- MENU LATERAL -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>Agenda NF</h2>
+
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li>
+
+                    <a href="index.html">
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+                <li class="active">
+
+                    <a href="agendamentos.html">
+
+                        <i class="fa-solid fa-calendar-days"></i>
+
+                        Agendamentos
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="fornecedores.html">
+
+                        <i class="fa-solid fa-building"></i>
+
+                        Fornecedores
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="transportadoras.html">
+
+                        <i class="fa-solid fa-truck"></i>
+
+                        Transportadoras
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+
+    <!-- CONTEÚDO -->
+
+    <main class="content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Agendamentos</h1>
+
+                <span class="subtitulo">
+
+                    Cadastro e gerenciamento de Notas Fiscais
+
+                </span>
+
+            </div>
+
+            <button id="btnNovo" class="btn-primary">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Novo Agendamento
+
+            </button>
+
+        </header>
+
+        <!-- PESQUISA -->
+
+        <section class="pesquisa">
+
+            <input
+                type="text"
+                id="pesquisa"
+                placeholder="Pesquisar por Nota Fiscal, Fornecedor ou Transportadora...">
+
+        </section>
+
+        <!-- TABELA -->
+
+        <section class="table-area">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Data</th>
+                        <th>Nota Fiscal</th>
+                        <th>Fornecedor</th>
+                        <th>Volumes</th>
+                        <th>Transportadora</th>
+                        <th width="140">Ações</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="agendaTabela">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script type="module" src="js/app.js"></script>
+
+</body>
+
+</html>
